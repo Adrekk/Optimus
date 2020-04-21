@@ -7,7 +7,7 @@
 * **Author:** Bugo [dragomano.ru](https://dragomano.ru/mods/optimus)
 * **License:** [Artistic License 2.0](https://opensource.org/licenses/artistic-license-2.0)
 * **Compatible with:** SMF 2.1 RC2+ / PHP 7.2+
-* **Tested on:** PHP 7.3.16 / MariaDB 10.4.12
+* **Tested on:** PHP 7.3.17 / MariaDB 10.4.12
 * **Hooks only:** Yes
 * **Languages:** English, Russian, Ukrainian
 
@@ -28,6 +28,7 @@ This mod might help you solve some problems related with indexing of your forum 
 * Simple Sitemap XML.
 * Generation of favicon.
 * Support of cyrillic domains.
+* Statistics of search queries on the forum.
 
 P.S. The **smf20** branch contains the Optimus 2.x version for SMF 2.0.x
 The **portamx**, **elkarte** and **wedge** branches contain versions for corresponding forks. Their functions may differ from those described above.
@@ -49,6 +50,7 @@ The **portamx**, **elkarte** and **wedge** branches contain versions for corresp
 * Создание простой XML-карты форума.
 * Генерация иконки сайта.
 * Поддержка кириллических доменов.
+* Статистика поисковых запросов на форуме.
 
 P.S. Ветка **smf20** содержит версию Optimus 2.x для SMF 2.0.x
 В ветках **portamx**, **elkarte** и **wedge** находятся версии для соответствующих форков. Их функции могут отличаться от представленных выше.

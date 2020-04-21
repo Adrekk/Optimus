@@ -11,7 +11,7 @@ namespace Bugo\Optimus;
  * @copyright 2010-2020 Bugo
  * @license https://opensource.org/licenses/artistic-license-2.0 Artistic-2.0
  *
- * @version 2.7.4
+ * @version 2.8
  */
 
 if (!defined('SMF'))
@@ -51,6 +51,7 @@ class Integration
 		add_integration_function('integrate_boardtree_board', __NAMESPACE__ . '\BoardHooks::boardtreeBoard', false, '$sourcedir/Optimus/BoardHooks.php');
 		add_integration_function('integrate_edit_board', __NAMESPACE__ . '\BoardHooks::editBoard', false, '$sourcedir/Optimus/BoardHooks.php');
 		add_integration_function('integrate_modify_board', __NAMESPACE__ . '\BoardHooks::modifyBoard', false, '$sourcedir/Optimus/BoardHooks.php');
+		add_integration_function('integrate_search_params', __CLASS__ . '::searchParams', false, __FILE__);
 		add_integration_function('integrate_modify_basic_settings', __NAMESPACE__ . '\Settings::modifyBasicSettings', false, '$sourcedir/Optimus/Settings.php');
 		add_integration_function('integrate_admin_areas', __NAMESPACE__ . '\Settings::adminAreas', false, '$sourcedir/Optimus/Settings.php');
 		add_integration_function('integrate_admin_search', __NAMESPACE__ . '\Settings::adminSearch', false, '$sourcedir/Optimus/Settings.php');
@@ -154,6 +155,7 @@ class Integration
 		Subs::makeTopicDescription();
 		Subs::getOgImage();
 		Subs::addSitemapLink();
+		Subs::prepareSearchTerms();
 		Subs::runAddons();
 	}
 
@@ -201,6 +203,16 @@ class Integration
 	{
 		Subs::makeExtendTitles();
 		Subs::prepareMetaTags();
+	}
+
+	/**
+	 * Log search terms when users are looking something on the forum
+	 *
+	 * @return void
+	 */
+	public static function searchParams()
+	{
+		Subs::logSearchTerms();
 	}
 
 	/**

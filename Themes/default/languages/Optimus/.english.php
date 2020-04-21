@@ -38,6 +38,10 @@ $txt['optimus_use_only_cookies']      = 'Use cookies to store the session id on 
 $txt['optimus_use_only_cookies_help'] = 'Enabling the setting <a href="https://www.php.net/manual/en/session.configuration.php#ini.session.use-only-cookies" target="_blank" rel="noopener" class="bbc_link">session.use_only_cookies</a> prevents attacks involved passing session ids in URLs.<br>In addition, you will be able to get rid of the session ids in the canonical addresses of the forum pages.';
 $txt['optimus_remove_index_php']      = 'Remove "index.php" from the forum urls';
 $txt['optimus_extend_h1']             = 'Add a page title to the <strong>H1</strong> tag';
+$txt['optimus_log_search']            = 'Enable logging of search terms';
+$txt['optimus_top_queries']           = 'Popular search queries';
+$txt['optimus_chart_title']           = 'Top %1$s';
+$txt['optimus_no_search_terms']       = 'Statistics are not yet available.';
 
 $txt['optimus_extra_title'] = 'Metadata';
 $txt['optimus_extra_desc']  = 'Here you can add an additional <a href="https://ogp.me/" target="_blank" rel="noopener" class="bbc_link">markup</a> for forum pages.';

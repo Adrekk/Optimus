@@ -11,7 +11,7 @@ namespace Bugo\Optimus;
  * @copyright 2010-2020 Bugo
  * @license https://opensource.org/licenses/artistic-license-2.0 Artistic-2.0
  *
- * @version 2.7.4
+ * @version 2.8
  */
 
 if (!defined('SMF'))
@@ -184,15 +184,13 @@ class Settings
 			array('check', 'optimus_allow_change_topic_keywords', 'subtext' => $txt['optimus_allow_change_topic_keywords_subtext']),
 			array('check', 'optimus_show_keywords_block'),
 			array('check', 'optimus_allow_change_board_og_image', 'subtext' => $txt['optimus_allow_change_board_og_image_subtext'], 'disabled' => !defined('JQUERY_VERSION')),
-			array('check', 'optimus_correct_http_status')
+			array('check', 'optimus_correct_http_status'),
+			array('title', 'optimus_extra_settings'),
+			array('check', 'optimus_use_only_cookies', 'help' => 'optimus_use_only_cookies_help', 'disabled' => !defined('JQUERY_VERSION')),
+			array('check', 'optimus_remove_index_php', 'disabled' => !empty($modSettings['simplesef_enable'])),
+			array('check', 'optimus_extend_h1'),
+			array('check', 'optimus_log_search')
 		);
-
-		if (defined('JQUERY_VERSION')) {
-			$config_vars[] = array('title', 'optimus_extra_settings');
-			$config_vars[] = array('check', 'optimus_use_only_cookies', 'help' => 'optimus_use_only_cookies_help');
-			$config_vars[] = array('check', 'optimus_remove_index_php', 'disabled' => !empty($modSettings['simplesef_enable']));
-			$config_vars[] = array('check', 'optimus_extend_h1');
-		}
 
 		if ($return_config)
 			return $config_vars;

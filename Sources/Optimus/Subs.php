@@ -11,7 +11,7 @@ namespace Bugo\Optimus;
  * @copyright 2010-2020 Bugo
  * @license https://opensource.org/licenses/artistic-license-2.0 Artistic-2.0
  *
- * @version 2.7.4
+ * @version 2.8
  */
 
 if (!defined('SMF'))
@@ -641,5 +641,115 @@ class Subs
 	public static function getOptimusLink()
 	{
 		return '<a href="https://dragomano.ru/mods/optimus" target="_blank" rel="noopener">Optimus</a>';
+	}
+
+	/**
+	 * Prepare search terms to display
+	 *
+	 * @return void
+	 */
+	public static function prepareSearchTerms()
+	{
+		global $context, $modSettings, $smcFunc;
+
+		if (($context['current_action'] !== 'search' && $context['current_action'] !== 'search2') || empty($modSettings['optimus_log_search']))
+			return;
+
+		if (($context['search_terms'] = cache_get_data('optimus_search_terms', 3600)) == null) {
+			$request = $smcFunc['db_query']('', '
+				SELECT phrase, hit
+				FROM {db_prefix}optimus_search_terms
+				ORDER BY hit DESC
+				LIMIT 30',
+				array()
+			);
+
+			$scale = 1;
+			while ($row = $smcFunc['db_fetch_assoc']($request)) {
+				if ($scale < $row['hit'])
+					$scale = $row['hit'];
+
+				$context['search_terms'][] = array(
+					'text'  => $row['phrase'],
+					'scale' => round(($row['hit'] * 100) / $scale),
+					'hit'   => $row['hit']
+				);
+			}
+
+			$smcFunc['db_free_result']($request);
+
+			cache_put_data('optimus_search_terms', $context['search_terms'], 3600);
+		}
+
+		self::showTopSearchTerms();
+	}
+
+	/**
+	 * Show top search terms
+	 *
+	 * @return void
+	 */
+	public static function showTopSearchTerms()
+	{
+		global $context;
+
+		if (empty($context['search_terms']))
+			return;
+
+		loadTemplate('Optimus');
+		$context['template_layers'][] = 'search_terms';
+	}
+
+	/**
+	 * Log search terms when users are looking something on the forum
+	 *
+	 * @return void
+	 */
+	public static function logSearchTerms()
+	{
+		global $modSettings, $smcFunc;
+
+		if (empty($_REQUEST['search']) || empty($modSettings['optimus_log_search']))
+			return;
+
+		$search_string = un_htmlspecialchars($_REQUEST['search']);
+
+		if (empty($search_string))
+			return;
+
+		$request = $smcFunc['db_query']('', "
+			SELECT id_term
+			FROM {db_prefix}optimus_search_terms
+			WHERE phrase = {string:phrase}
+			LIMIT 1",
+			array(
+				'phrase' => $search_string
+			)
+		);
+
+		list ($id) = $smcFunc['db_fetch_row']($request);
+
+		if ($smcFunc['db_num_rows']($request) == 0) {
+			$smcFunc['db_insert']('',
+				'{db_prefix}optimus_search_terms',
+				array(
+					'phrase' => 'string-255',
+					'hit'    => 'int'
+				),
+				array($search_string, 1),
+				array('id_term')
+			);
+		} else {
+			$smcFunc['db_query']('', '
+				UPDATE {db_prefix}optimus_search_terms
+				SET hit = hit + 1
+				WHERE id_term = {int:id_term}',
+				array(
+					'id_term' => $id
+				)
+			);
+		}
+
+		$smcFunc['db_free_result']($request);
 	}
 }

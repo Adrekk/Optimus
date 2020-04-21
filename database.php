@@ -70,6 +70,36 @@ $tables[] = array(
 	)
 );
 
+$tables[] = array(
+	'name'    => 'optimus_search_terms',
+	'columns' => array(
+		array(
+			'name'     => 'id_term',
+			'type'     => 'int',
+			'size'     => 11,
+			'unsigned' => true
+		),
+		array(
+			'name' => 'phrase',
+			'type' => 'varchar',
+			'size' => 255,
+			'null' => false
+		),
+		array(
+			'name'     => 'hit',
+			'type'     => 'int',
+			'size'     => 11,
+			'unsigned' => true
+		)
+	),
+	'indexes' => array(
+		 array(
+			 'type'    => 'primary',
+			 'columns' => array('id_term')
+		 )
+	)
+);
+
 foreach($tables as $table)
 	$smcFunc['db_create_table']('{db_prefix}' . $table['name'], $table['columns'], $table['indexes'], array(), 'ignore');
 

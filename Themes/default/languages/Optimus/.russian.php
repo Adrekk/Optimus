@@ -38,6 +38,10 @@ $txt['optimus_use_only_cookies']      = 'Использовать куки дл�
 $txt['optimus_use_only_cookies_help'] = 'Включение параметра <a href="https://www.php.net/manual/ru/session.configuration.php#ini.session.use-only-cookies" target="_blank" rel="noopener" class="bbc_link">session.use_only_cookies</a> предотвращает атаки с использованием идентификатора сессии, размещенного в URL.<br>Кроме того, вы сможете избавиться от идентификатора сессии в канонических адресах страниц форума.';
 $txt['optimus_remove_index_php']      = 'Убрать «index.php» из адресов форума';
 $txt['optimus_extend_h1']             = 'Добавлять заголовок страницы к тегу <strong>H1</strong>';
+$txt['optimus_log_search']            = 'Вести статистику поисковых запросов';
+$txt['optimus_top_queries']           = 'Популярные запросы';
+$txt['optimus_chart_title']           = 'Топ-%1$s';
+$txt['optimus_no_search_terms']       = 'Статистики пока нет.';
 
 $txt['optimus_extra_title'] = 'Микроразметка';
 $txt['optimus_extra_desc']  = 'Добавление дополнительной <a href="https://ruogp.me/" target="_blank" rel="noopener" class="bbc_link">разметки</a> для страниц форума.';

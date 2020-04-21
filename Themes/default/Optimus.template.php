@@ -313,3 +313,75 @@ function template_sitemapindex_xml()
 	echo '
 </sitemapindex>';
 }
+
+function template_search_terms_above()
+{
+	global $txt, $context, $scripturl;
+
+	echo '
+	<div class="cat_bar">
+		<h3 class="catbg">', $txt['optimus_top_queries'], '</h3>
+	</div>';
+
+	if (!empty($context['search_terms'])) {
+		echo '
+	<div class="windowbg noup">
+		<div class="content">';
+
+		$i = 0;
+		$rows = '';
+		foreach ($context['search_terms'] as $id => $data) {
+			if ($data['hit'] > 10) {
+				$i++;
+				$rows .= '["' . $data['text'] . '",' . $data['hit'] . '],';
+			}
+		}
+
+		if (!empty($rows)) {
+			echo '
+			<script src="https://www.gstatic.com/charts/loader.js"></script>
+			<script>
+				google.charts.load(\'current\', {\'packages\':[\'corechart\']});
+				google.charts.setOnLoadCallback(drawChart);
+				function drawChart() {
+					let data = new google.visualization.DataTable();
+					data.addColumn("string", "Query");
+					data.addColumn("number", "Hits");
+					data.addRows([', $rows, ']);
+					let options = {"title":"' . sprintf($txt['optimus_chart_title'], $i) . '", "backgroundColor":"transparent", "width":"800"};
+					let chart = new google.visualization.PieChart(document.getElementById("chart_div"));
+					chart.draw(data, options);
+				}
+			</script>
+			<div id="chart_div" class="centertext"></div>';
+		}
+
+		echo '
+			<dl class="stats">';
+
+		foreach ($context['search_terms'] as $id => $data) {
+			if (!empty($data['text'])) {
+				echo '
+				<dt>
+					<a href="', $scripturl, '?action=search2;search=', urlencode($data['text']), '">', $data['text'], '</a>
+				</dt>
+				<dd class="statsbar generic_bar righttext">
+					<div class="bar" style="width: ', $data['scale'], '%"></div>
+					<span>', $data['hit'], '</span>
+				</dd>';
+			}
+		}
+
+		echo '
+			</dl>
+		</div>
+	</div>';
+	} else {
+		echo '
+	<p class="information">', $txt['optimus_no_search_terms'], '</p>';
+	}
+}
+
+function template_search_terms_below()
+{
+}
