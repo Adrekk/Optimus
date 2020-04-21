@@ -77,7 +77,8 @@ $tables[] = array(
 			'name'     => 'id_term',
 			'type'     => 'int',
 			'size'     => 11,
-			'unsigned' => true
+			'unsigned' => true,
+			'auto'     => true
 		),
 		array(
 			'name' => 'phrase',
@@ -89,6 +90,7 @@ $tables[] = array(
 			'name'     => 'hit',
 			'type'     => 'int',
 			'size'     => 11,
+			'default'  => 1,
 			'unsigned' => true
 		)
 	),
