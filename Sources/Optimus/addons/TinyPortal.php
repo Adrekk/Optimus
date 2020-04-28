@@ -29,56 +29,9 @@ class TinyPortal
 	 *
 	 * @return boolean
 	 */
-	private static function arePortalTablesExist()
+	private static function isPortalInstalled()
 	{
-		global $smcFunc, $db_prefix;
-
-		if (!function_exists('addTPActions'))
-			return false;
-
-		db_extend();
-
-		$tp_articles  = $smcFunc['db_list_tables'](false, $db_prefix . 'tp_articles');
-		$tp_variables = $smcFunc['db_list_tables'](false, $db_prefix . 'tp_variables');
-
-		return !empty($tp_articles) && !empty($tp_variables);
-	}
-
-	/**
-	 * Get an array of portal articles ([] = array('url' => link, 'date' => date))
-	 *
-	 * @param array $links
-	 * @return void
-	 */
-	public static function sitemap(&$links)
-	{
-		global $smcFunc, $scripturl;
-
-		if (empty(self::arePortalTablesExist()))
-			return;
-
-		$request = $smcFunc['db_query']('', '
-			SELECT a.id, a.date, a.shortname
-			FROM {db_prefix}tp_articles AS a
-				INNER JOIN {db_prefix}tp_variables AS v ON (v.id = a.category)
-			WHERE a.approved = {int:approved}
-				AND a.off = {int:off_status}
-				AND {int:guests} IN (v.value3)
-			ORDER BY a.id',
-			array(
-				'approved'   => 1, // The article must be approved
-				'off_status' => 0, // The article must be active
-				'guests'     => -1 // The article category must be available to guests
-			)
-		);
-
-		while ($row = $smcFunc['db_fetch_assoc']($request))
-			$links[] = array(
-				'loc'     => $scripturl . '?page=' . ($row['shortname'] ?: $row['id']),
-				'lastmod' => $row['date']
-			);
-
-		$smcFunc['db_free_result']($request);
+		return class_exists('TPortal_Integrate');
 	}
 
 	/**
@@ -90,7 +43,7 @@ class TinyPortal
 	{
 		global $smcFunc, $settings, $txt, $context, $scripturl;
 
-		if (!isset($_GET['page']) || empty(self::arePortalTablesExist()))
+		if (!isset($_GET['page']) || empty(self::isPortalInstalled()))
 			return;
 
 		$page_is_num = is_numeric($_GET['page']);
@@ -135,6 +88,43 @@ class TinyPortal
 
 			$context['canonical_url'] = $scripturl . '?page=' . ($row['shortname'] ?: $row['id']);
 		}
+
+		$smcFunc['db_free_result']($request);
+	}
+
+	/**
+	 * Get an array of portal articles ([] = array('url' => link, 'date' => date))
+	 *
+	 * @param array $links
+	 * @return void
+	 */
+	public static function sitemap(&$links)
+	{
+		global $smcFunc, $scripturl;
+
+		if (empty(self::isPortalInstalled()))
+			return;
+
+		$request = $smcFunc['db_query']('', '
+			SELECT a.id, a.date, a.shortname
+			FROM {db_prefix}tp_articles AS a
+				INNER JOIN {db_prefix}tp_variables AS v ON (v.id = a.category)
+			WHERE a.approved = {int:approved}
+				AND a.off = {int:off_status}
+				AND {int:guests} IN (v.value3)
+			ORDER BY a.id',
+			array(
+				'approved'   => 1, // The article must be approved
+				'off_status' => 0, // The article must be active
+				'guests'     => -1 // The article category must be available to guests
+			)
+		);
+
+		while ($row = $smcFunc['db_fetch_assoc']($request))
+			$links[] = array(
+				'loc'     => $scripturl . '?page=' . ($row['shortname'] ?: $row['id']),
+				'lastmod' => $row['date']
+			);
 
 		$smcFunc['db_free_result']($request);
 	}

@@ -27,16 +27,9 @@ class EhPortal
 	 *
 	 * @return boolean
 	 */
-	public static function isPortalTableExist()
+	public static function isPortalInstalled()
 	{
-		global $smcFunc, $db_prefix;
-
-		if (!function_exists('sportal_actions'))
-			return false;
-
-		db_extend();
-
-		return !empty($smcFunc['db_list_tables'](false, $db_prefix . 'sp_pages'));
+		return function_exists('sportal_actions');
 	}
 
 	/**
@@ -50,7 +43,7 @@ class EhPortal
 	{
 		global $modSettings, $boardurl, $boarddir;
 
-		if (empty(self::isPortalTableExist()))
+		if (empty(self::isPortalInstalled()))
 			return;
 
 		$simple_portal = isset($modSettings['sp_portal_mode']) && $modSettings['sp_portal_mode'] == 1;
@@ -74,7 +67,7 @@ class EhPortal
 	{
 		global $smcFunc, $scripturl;
 
-		if (empty(self::isPortalTableExist()))
+		if (empty(self::isPortalInstalled()))
 			return;
 
 		$request = $smcFunc['db_query']('', '

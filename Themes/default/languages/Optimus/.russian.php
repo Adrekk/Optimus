@@ -33,15 +33,20 @@ $txt['optimus_allow_change_topic_keywords_subtext'] = 'Отображается 
 $txt['optimus_show_keywords_block']                 = 'Отображать блок с ключевыми словами над первым сообщением темы';
 $txt['optimus_correct_http_status']                 = 'Возвращать <a href="https://goo.gl/1UHxeB" target="_blank" rel="noopener" class="bbc_link">код 403/404</a>, в зависимости от статуса запрашиваемой страницы';
 
-$txt['optimus_extra_settings']        = 'Дополнительно';
-$txt['optimus_use_only_cookies']      = 'Использовать куки для хранения идентификатора сессии на стороне клиента';
-$txt['optimus_use_only_cookies_help'] = 'Включение параметра <a href="https://www.php.net/manual/ru/session.configuration.php#ini.session.use-only-cookies" target="_blank" rel="noopener" class="bbc_link">session.use_only_cookies</a> предотвращает атаки с использованием идентификатора сессии, размещенного в URL.<br>Кроме того, вы сможете избавиться от идентификатора сессии в канонических адресах страниц форума.';
-$txt['optimus_remove_index_php']      = 'Убрать «index.php» из адресов форума';
-$txt['optimus_extend_h1']             = 'Добавлять заголовок страницы к тегу <strong>H1</strong>';
-$txt['optimus_log_search']            = 'Вести статистику поисковых запросов';
-$txt['optimus_top_queries']           = 'Популярные запросы';
-$txt['optimus_chart_title']           = 'Топ-%1$s';
-$txt['optimus_no_search_terms']       = 'Статистики пока нет.';
+$txt['optimus_extra_settings']           = 'Дополнительно';
+$txt['optimus_use_only_cookies']         = 'Использовать куки для хранения идентификатора сессии на стороне клиента';
+$txt['optimus_use_only_cookies_help']    = 'Включение параметра <a href="https://www.php.net/manual/ru/session.configuration.php#ini.session.use-only-cookies" target="_blank" rel="noopener" class="bbc_link">session.use_only_cookies</a> предотвращает атаки с использованием идентификатора сессии, размещенного в URL.<br>Кроме того, вы сможете избавиться от идентификатора сессии в канонических адресах страниц форума.';
+$txt['optimus_remove_index_php']         = 'Убрать «index.php» из адресов форума';
+$txt['optimus_extend_h1']                = 'Добавлять заголовок страницы к тегу <strong>H1</strong>';
+$txt['optimus_log_search']               = 'Вести статистику поисковых запросов';
+$txt['groups_optimus_view_search_terms'] = 'Разрешение на просмотр статистики поиска';
+
+$txt['permissionname_optimus_view_search_terms'] = $txt['group_perms_name_optimus_view_search_terms'] = 'Просмотр статистики поисковых запросов';
+$txt['permissionhelp_optimus_view_search_terms'] = 'Возможность просматривать статистику поиска на форуме.';
+
+$txt['optimus_top_queries']     = 'Популярные запросы';
+$txt['optimus_chart_title']     = 'Топ-%1$s';
+$txt['optimus_no_search_terms'] = 'Статистики пока нет.';
 
 $txt['optimus_extra_title'] = 'Микроразметка';
 $txt['optimus_extra_desc']  = 'Добавление дополнительной <a href="https://ruogp.me/" target="_blank" rel="noopener" class="bbc_link">разметки</a> для страниц форума.';

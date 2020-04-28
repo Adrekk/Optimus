@@ -693,7 +693,7 @@ class Subs
 	{
 		global $context;
 
-		if (empty($context['search_terms']))
+		if (empty($context['search_terms']) || !allowedTo('optimus_view_search_terms'))
 			return;
 
 		loadTemplate('Optimus');

@@ -29,11 +29,7 @@ class LightPortal
 	 */
 	public static function isPortalInstalled()
 	{
-		global $smcFunc, $db_prefix;
-
-		db_extend();
-
-		return !empty($smcFunc['db_list_tables'](false, $db_prefix . 'lp_pages')) && class_exists('\Bugo\LightPortal\Helpers');
+		return class_exists('\Bugo\LightPortal\Integration');
 	}
 
 	/**
@@ -50,7 +46,8 @@ class LightPortal
 		if (empty(self::isPortalInstalled()))
 			return;
 
-		$common_rules[] = empty($modSettings['lp_standalone']) && empty($modSettings['lp_main_page_disable']) ? "Allow: " . $url_path . "/*action=forum$" : "";
+		$excluded_actions = !empty($modSettings['lp_standalone_mode_excluded_actions']) ? explode(',', $modSettings['lp_standalone_mode_excluded_actions']) : [];
+		$common_rules[] = (!empty($modSettings['lp_standalone_mode']) && in_array('forum', $excluded_actions)) || !empty($modSettings['lp_frontpage_mode']) ? "Allow: " . $url_path . "/*action=forum$" : "";
 		$common_rules[] = "Allow: " . $url_path . "/*page";
 	}
 

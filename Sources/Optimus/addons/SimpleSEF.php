@@ -34,24 +34,4 @@ class SimpleSEF
 		if (!empty($modSettings['simplesef_enable']) && !empty($modSettings['optimus_remove_index_php']))
 			updateSettings(array('optimus_remove_index_php' => 0));
 	}
-
-	/**
-	 * Make preparing of sitemap content before creating
-	 *
-	 * @param array $links
-	 * @return void
-	 */
-	public static function sitemap(&$links)
-	{
-		global $modSettings, $sourcedir;
-
-		if (!empty($modSettings['simplesef_enable']) && file_exists($sourcedir . '/SimpleSEF.php')) {
-			require_once($sourcedir . '/SimpleSEF.php');
-
-			$simple_sef = new \SimpleSEF;
-
-			foreach ($links as $id => $entry)
-				$links[$id]['loc'] = $simple_sef->create_sef_url($entry['loc']);
-		}
-	}
 }

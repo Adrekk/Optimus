@@ -49,9 +49,9 @@ class PortaMx
 	 */
 	public static function sitemap(&$links)
 	{
-		global $sourcedir;
+		global $modSettings;
 
-		if (file_exists($sourcedir . '/PortaMx/PortaMxSEF.php') && function_exists('create_sefurl')) {
+		if (!empty($modSettings['pmxsef_enable']) && function_exists('create_sefurl')) {
 			foreach ($links as $id => $entry)
 				$links[$id]['loc'] = create_sefurl($entry['loc']);
 		}

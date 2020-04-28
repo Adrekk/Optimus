@@ -23,17 +23,22 @@ if (!defined('SMF'))
 class Settings
 {
 	/**
-	 * Remove meta_keywords setting (it moved to Optimus settings)
+	 * Remove meta_keywords setting (it moved to Optimus settings) and disable queryless_urls settings (if "Remove index.php" enabled)
 	 *
 	 * @param array $config_vars
 	 * @return void
 	 */
 	public static function modifyBasicSettings(&$config_vars)
 	{
+		global $modSettings;
+
 		foreach ($config_vars as $key => $dump) {
 			if (isset($dump[1]) && $dump[1] == 'meta_keywords') {
 				unset($config_vars[$key]);
-				break;
+			}
+
+			if (isset($dump[1]) && $dump[1] == 'queryless_urls') {
+				$config_vars[$key]['disabled'] = !empty($modSettings['optimus_remove_index_php']);
 			}
 		}
 	}
@@ -187,9 +192,10 @@ class Settings
 			array('check', 'optimus_correct_http_status'),
 			array('title', 'optimus_extra_settings'),
 			array('check', 'optimus_use_only_cookies', 'help' => 'optimus_use_only_cookies_help', 'disabled' => !defined('JQUERY_VERSION')),
-			array('check', 'optimus_remove_index_php', 'disabled' => !empty($modSettings['simplesef_enable'])),
+			array('check', 'optimus_remove_index_php', 'disabled' => !empty($modSettings['simplesef_enable']) || !empty($modSettings['queryless_urls'])),
 			array('check', 'optimus_extend_h1'),
-			array('check', 'optimus_log_search')
+			array('check', 'optimus_log_search'),
+			array('permissions', 'optimus_view_search_terms')
 		);
 
 		if ($return_config)

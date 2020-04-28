@@ -38,6 +38,10 @@ class Integration
 		add_integration_function('integrate_actions', __CLASS__ . '::actions', false, __FILE__);
 		add_integration_function('integrate_simple_actions', __CLASS__ . '::simpleActions', false, __FILE__);
 		add_integration_function('integrate_theme_context', __CLASS__ . '::themeContext', false, __FILE__);
+		add_integration_function('integrate_load_permissions', __CLASS__ . '::loadPermissions', false, __FILE__);
+		add_integration_function('integrate_search_params', __CLASS__ . '::searchParams', false, __FILE__);
+		add_integration_function('integrate_pre_include', null, false, '$sourcedir/Optimus/Keywords.php');
+		add_integration_function('integrate_pre_include', null, false, '$sourcedir/Optimus/Subs.php');
 		add_integration_function('integrate_display_topic', __NAMESPACE__ . '\TopicHooks::displayTopic', false, '$sourcedir/Optimus/TopicHooks.php');
 		add_integration_function('integrate_prepare_display_context', __NAMESPACE__ . '\TopicHooks::prepareDisplayContext', false, '$sourcedir/Optimus/TopicHooks.php');
 		add_integration_function('integrate_post_end', __NAMESPACE__ . '\TopicHooks::postEnd', false, '$sourcedir/Optimus/TopicHooks.php');
@@ -51,7 +55,6 @@ class Integration
 		add_integration_function('integrate_boardtree_board', __NAMESPACE__ . '\BoardHooks::boardtreeBoard', false, '$sourcedir/Optimus/BoardHooks.php');
 		add_integration_function('integrate_edit_board', __NAMESPACE__ . '\BoardHooks::editBoard', false, '$sourcedir/Optimus/BoardHooks.php');
 		add_integration_function('integrate_modify_board', __NAMESPACE__ . '\BoardHooks::modifyBoard', false, '$sourcedir/Optimus/BoardHooks.php');
-		add_integration_function('integrate_search_params', __CLASS__ . '::searchParams', false, __FILE__);
 		add_integration_function('integrate_modify_basic_settings', __NAMESPACE__ . '\Settings::modifyBasicSettings', false, '$sourcedir/Optimus/Settings.php');
 		add_integration_function('integrate_admin_areas', __NAMESPACE__ . '\Settings::adminAreas', false, '$sourcedir/Optimus/Settings.php');
 		add_integration_function('integrate_admin_search', __NAMESPACE__ . '\Settings::adminSearch', false, '$sourcedir/Optimus/Settings.php');
@@ -92,7 +95,7 @@ class Integration
 	{
 		global $modSettings, $boardurl, $scripturl, $mbname, $context;
 
-		if (isset($_REQUEST['xml']) || (empty($modSettings['optimus_remove_index_php']) && empty($modSettings['optimus_extend_h1'])))
+		if (isset($_REQUEST['xml']))
 			return $buffer;
 
 		$replacements = [];
@@ -120,8 +123,12 @@ class Integration
 	{
 		global $modSettings, $scripturl, $boardurl;
 
-		if (!empty($modSettings['optimus_remove_index_php']))
+		if (!empty($modSettings['optimus_remove_index_php'])) {
+			if (!empty($modSettings['queryless_urls']))
+				updateSettings(array('queryless_urls' => '0'));
+
 			$scripturl = $boardurl . '/';
+		}
 	}
 
 	/**
@@ -131,12 +138,7 @@ class Integration
 	 */
 	public static function loadTheme()
 	{
-		global $sourcedir;
-
 		loadLanguage('Optimus/');
-
-		require_once($sourcedir . "/Optimus/Subs.php");
-		require_once($sourcedir . "/Optimus/Keywords.php");
 
 		Subs::changeFrontPageTitle();
 		Subs::addCounters();
@@ -203,6 +205,20 @@ class Integration
 	{
 		Subs::makeExtendTitles();
 		Subs::prepareMetaTags();
+	}
+
+	/**
+	 * Determine permissions
+	 *
+	 * Определяем права доступа
+	 *
+	 * @param array $permissionGroups
+	 * @param array $permissionList
+	 * @return void
+	 */
+	public static function loadPermissions(array &$permissionGroups, array &$permissionList)
+	{
+		$permissionList['membergroup']['optimus_view_search_terms'] = array(false, 'general', 'view_basic_info');
 	}
 
 	/**
