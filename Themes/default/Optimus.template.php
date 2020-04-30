@@ -24,7 +24,7 @@ function template_favicon()
 						<span><label for="optimus_favicon_api_key">', $txt['optimus_favicon_api_key'], '</label></span>
 					</dt>
 					<dd>
-						<input name="optimus_favicon_api_key" id="optimus_favicon_api_key" value="', !empty($modSettings['optimus_favicon_api_key']) ? $modSettings['optimus_favicon_api_key'] : '', '" class="input_text" type="text" size="50">';
+						<input name="optimus_favicon_api_key" id="optimus_favicon_api_key" value="', !empty($modSettings['optimus_favicon_api_key']) ? $modSettings['optimus_favicon_api_key'] : '', '" class="input_text" type="text" size="80">';
 
 	if (!empty($modSettings['optimus_favicon_api_key']))
 		echo '
@@ -39,7 +39,7 @@ function template_favicon()
 						</span>
 					</dt>
 					<dd>
-						<textarea rows="5" style="width:90%" name="optimus_favicon_text" id="optimus_favicon_text">', !empty($modSettings['optimus_favicon_text']) ? $modSettings['optimus_favicon_text'] : '', '</textarea>
+						<textarea rows="5" name="optimus_favicon_text" id="optimus_favicon_text">', !empty($modSettings['optimus_favicon_text']) ? $modSettings['optimus_favicon_text'] : '', '</textarea>
 					</dd>
 				</dl>
 				<hr class="clear">
@@ -194,31 +194,26 @@ function template_counters()
 
 function template_robots()
 {
-	global $context, $txt;
+	global $context, $txt, $modSettings;
 
 	echo '
 	<form action="', $context['post_url'], '" method="post">
 		<div class="cat_bar">
 			<h3 class="catbg">', $txt['optimus_manage'], '</h3>
-		</div>';
-
-	if (empty($context['robots_content'])) {
-		echo '
+		</div>
 		<div class="windowbg noup">
 			<div class="content">
-				<form action="', $context['post_url'], '" method="post" accept-charset="', $context['character_set'], '">
-					<dl class="settings">
-						<dt>
-							<span><label for="optimus_root_path">', $txt['optimus_root_path'], '</label></span>
-						</dt>
-						<dd>
-							<input name="optimus_root_path" id="optimus_root_path" value="', !empty($modSettings['optimus_root_path']) ? $modSettings['optimus_root_path'] : '', '" class="input_text" type="text" size="50">
-						</dd>
-					</dl>
-				</form>';
-	} else {
-		echo '
-		<div class="windowbg noup">
+				<dl class="settings">
+					<dt>
+						<span><label for="optimus_root_path">', $txt['optimus_root_path'], '</label></span>
+					</dt>
+					<dd>
+						<input name="optimus_root_path" id="optimus_root_path" value="', $modSettings['optimus_root_path'] ?? '', '" class="input_text" type="text" size="80">
+					</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="windowbg">
 			<div class="content">
 				<div class="half_content">
 					<div class="content">
@@ -240,16 +235,15 @@ function template_robots()
 						<h4>', $txt['optimus_links_title'], '</h4>
 						<ul class="smalltext">';
 
-		foreach ($txt['optimus_links'] as $ankor => $url) {
-			echo '
-							<li><a href="', $url, '" target="_blank">', $ankor, '</a></li>';
-		}
-
+	foreach ($txt['optimus_links'] as $ankor => $url) {
 		echo '
+							<li><a href="', $url, '" target="_blank">', $ankor, '</a></li>';
+	}
+
+	echo '
 						</ul>
 					</div>
 				</div>';
-	}
 
 	echo '
 				<hr class="clear">

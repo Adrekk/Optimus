@@ -11,7 +11,7 @@ namespace Bugo\Optimus;
  * @copyright 2010-2020 Bugo
  * @license https://opensource.org/licenses/artistic-license-2.0 Artistic-2.0
  *
- * @version 2.8
+ * @version 2.8.2
  */
 
 if (!defined('SMF'))
@@ -178,9 +178,9 @@ class Settings
 
 		$config_vars = array(
 			array('title', 'optimus_main_page'),
-			array('text', 'optimus_forum_index', 40),
-			array('large_text', 'optimus_description', '4" style="width:80%', 'subtext' => $txt['optimus_description_subtext']),
-			array('large_text', 'meta_keywords', '4" style="width:80%', 'subtext' => $txt['meta_keywords_note']),
+			array('text', 'optimus_forum_index', 80),
+			array('large_text', 'optimus_description', '4', 'subtext' => $txt['optimus_description_subtext']),
+			array('large_text', 'meta_keywords', '4', 'subtext' => $txt['meta_keywords_note']),
 			array('title', 'optimus_all_pages'),
 			array('select', 'optimus_board_extend_title', $txt['optimus_board_extend_title_set']),
 			array('select', 'optimus_topic_extend_title', $txt['optimus_topic_extend_title_set']),
@@ -241,7 +241,6 @@ class Settings
 
 		if (isset($_GET['save'])) {
 			$_POST['optimus_tw_cards'] = str_replace('@', '', filter_input(INPUT_POST, 'optimus_tw_cards', FILTER_SANITIZE_STRING));
-
 			checkSession();
 
 			$save_vars = $config_vars;
@@ -377,20 +376,24 @@ class Settings
 	 */
 	public static function robotsTabSettings()
 	{
-		global $context, $txt, $scripturl, $modSettings, $sourcedir;
+		global $context, $txt, $scripturl, $boarddir, $modSettings, $sourcedir;
 
 		$context['sub_template'] = 'robots';
 		$context['page_title'] .= ' - ' . $txt['optimus_robots_title'];
 		$context['post_url'] = $scripturl . '?action=admin;area=optimus;sa=robots;save';
 
+		$root = $_SERVER['DOCUMENT_ROOT'] ?? $boarddir;
+		if (empty($modSettings['optimus_root_path']))
+			updateSettings(array('optimus_root_path' => $root));
+
 		$config_vars = array(
 			array('text', 'optimus_root_path')
 		);
 
-		$robots_path = ($_SERVER['DOCUMENT_ROOT'] ?? $modSettings['optimus_root_path'] ?? '') . "/robots.txt";
-		$context['robots_content'] = file_get_contents($robots_path);
-		require_once($sourcedir . "/Optimus/Robots.php");
+		$robots_path = ($modSettings['optimus_root_path'] ?? $root) . '/robots.txt';
+		$context['robots_content'] = is_file($robots_path) ? file_get_contents($robots_path) : '';
 
+		require_once($sourcedir . "/Optimus/Robots.php");
 		$robots = new Robots();
 		$robots->generate();
 
@@ -401,7 +404,6 @@ class Settings
 			saveDBSettings($save_vars);
 
 			file_put_contents($robots_path, filter_input(INPUT_POST, 'robots', FILTER_SANITIZE_STRING), LOCK_EX);
-
 			redirectexit('action=admin;area=optimus;sa=robots');
 		}
 
