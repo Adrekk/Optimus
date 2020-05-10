@@ -99,8 +99,10 @@ class Integration
 			return $buffer;
 
 		$replacements = [];
-		if (!empty($modSettings['optimus_remove_index_php']))
+		if (!empty($modSettings['optimus_remove_index_php'])) {
 			$replacements[$boardurl . '/index.php'] = $boardurl . '/';
+			$replacements['var smf_scripturl = "' . $boardurl . '/'] = 'var smf_scripturl = "' . $boardurl . '/index.php';
+		}
 
 		if (!empty($modSettings['optimus_extend_h1'])) {
 			if (!empty($context['current_action']) || !empty($_GET))

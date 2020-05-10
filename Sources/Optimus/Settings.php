@@ -179,8 +179,8 @@ class Settings
 		$config_vars = array(
 			array('title', 'optimus_main_page'),
 			array('text', 'optimus_forum_index', 80),
-			array('large_text', 'optimus_description', '4', 'subtext' => $txt['optimus_description_subtext']),
-			array('large_text', 'meta_keywords', '4', 'subtext' => $txt['meta_keywords_note']),
+			array('large_text', 'optimus_description', 'subtext' => $txt['optimus_description_subtext']),
+			array('large_text', 'meta_keywords', 'subtext' => $txt['meta_keywords_note']),
 			array('title', 'optimus_all_pages'),
 			array('select', 'optimus_board_extend_title', $txt['optimus_board_extend_title_set']),
 			array('select', 'optimus_topic_extend_title', $txt['optimus_topic_extend_title_set']),
@@ -337,6 +337,7 @@ class Settings
 		global $context, $txt, $scripturl, $modSettings;
 
 		$context['page_title'] .= ' - ' . $txt['optimus_counters'];
+		$context['settings_title'] = $txt['optimus_counters'];
 		$context['post_url'] = $scripturl . '?action=admin;area=optimus;sa=counters;save';
 
 		if (!isset($modSettings['optimus_counters_css']))
@@ -345,17 +346,15 @@ class Settings
 			updateSettings(array('optimus_ignored_actions' => 'admin,bookmarks,credits,helpadmin,pm,printpage'));
 
 		$config_vars = array(
-			array('large_text', 'optimus_head_code'),
-			array('large_text', 'optimus_stat_code'),
+			array('large_text', 'optimus_head_code', 'subtext' => $txt['optimus_head_code_subtext']),
+			array('large_text', 'optimus_stat_code', 'subtext' => $txt['optimus_stat_code_subtext']),
 			array('large_text', 'optimus_count_code'),
 			array('large_text', 'optimus_counters_css'),
-			array('text', 'optimus_ignored_actions')
+			array('text', 'optimus_ignored_actions', 80, 'subtext' => $txt['optimus_ignored_actions_subtext'])
 		);
 
 		if ($return_config)
 			return $config_vars;
-
-		$context['sub_template'] = 'counters';
 
 		if (isset($_GET['save'])) {
 			checkSession();

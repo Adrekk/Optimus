@@ -77,20 +77,23 @@ $txt['optimus_meta_name']      = 'Имя тега';
 $txt['optimus_meta_content']   = 'Значение';
 $txt['optimus_meta_info']      = 'Пожалуйста, указывайте только значения, содержащиеся в добавляемых мета-тегах (а не теги целиком).<br>Например: <span class="smalltext">&lt;meta name="<strong>ИМЯ ТЕГА</strong>" content="<strong>ЗНАЧЕНИЕ</strong>"&gt;</span>';
 $txt['optimus_search_engines'] = array(
-	'Google' => array('google-site-verification','<a href="https://www.google.com/webmasters/tools/" target="_blank" rel="noopener">Google Search Console</a>'),
-	'Yandex' => array('yandex-verification', '<a href="https://webmaster.yandex.ru/" target="_blank" rel="noopener">Яндекс.Вебмастер</a>'),
-	'Mail'   => array('wmail-verification', '<a href="https://webmaster.mail.ru" target="_blank" rel="noopener">Поиск Mail.Ru - Кабинет вебмастера</a>'),
-	'Bing'   => array('msvalidate.01', '<a href="https://www.bing.com/toolbox/webmaster/" target="_blank" rel="noopener">Bing - Средства веб-мастера</a>')
+	'Yandex' => array('yandex-verification', 'https://webmaster.yandex.ru/', 'Яндекс.Вебмастер'),
+	'Google' => array('google-site-verification','https://www.google.com/webmasters/tools/', 'Google Search Console'),
+	'Mail'   => array('wmail-verification', 'https://webmaster.mail.ru', 'Поиск Mail.Ru - Кабинет вебмастера'),
+	'Bing'   => array('msvalidate.01', 'https://www.bing.com/toolbox/webmaster/', 'Bing - Средства веб-мастера')
 );
 
 $txt['optimus_counters']      = 'Счётчики';
 $txt['optimus_counters_desc'] = 'Добавляйте и изменяйте всевозможные счетчики для подсчета посещений форума.';
 
-$txt['optimus_head_code']       = 'Невидимые счётчики с загрузкой в секции <strong>head</strong> (<a href="https://www.google.ru/analytics/" target="_blank" rel="noopener" class="bbc_link">Google Analytics</a>)';
-$txt['optimus_stat_code']       = 'Другие невидимые счётчики (например, <a href="https://metrika.yandex.ru/" target="_blank" rel="noopener" class="bbc_link">Яндекс.Метрика</a> без информера)';
-$txt['optimus_count_code']      = 'Обычные счётчики (<a href="https://www.liveinternet.ru/add" target="_blank" rel="noopener" class="bbc_link">LiveInternet</a>, <a href="https://top100.rambler.ru/" target="_blank" rel="noopener" class="bbc_link">Rambler\'s Top100</a> и т. п.)';
-$txt['optimus_counters_css']    = 'Оформление блока со счётчиками (CSS)';
-$txt['optimus_ignored_actions'] = 'Игнорируемые области (actions) &mdash; на этих страницах счетчики подгружаться не будут!';
+$txt['optimus_head_code']               = 'Невидимые счётчики с загрузкой в секции <strong>head</strong>';
+$txt['optimus_head_code_subtext']       = 'Например, <a href="https://www.google.ru/analytics/" target="_blank" rel="noopener" class="bbc_link">Google Analytics</a>';
+$txt['optimus_stat_code']               = 'Невидимые счётчики с загрузкой в секции <strong>body</strong>';
+$txt['optimus_stat_code_subtext']       = 'Например, <a href="https://metrika.yandex.ru/" target="_blank" rel="noopener" class="bbc_link">Яндекс.Метрика</a> без информера';
+$txt['optimus_count_code']              = 'Обычные счётчики';
+$txt['optimus_counters_css']            = 'Оформление блока с обычными счётчиками (CSS)';
+$txt['optimus_ignored_actions']         = 'Игнорируемые области';
+$txt['optimus_ignored_actions_subtext'] = 'На этих страницах счетчики подгружаться не будут!';
 
 $txt['optimus_robots_title'] = 'Редактор robots.txt';
 $txt['optimus_robots_desc']  = 'Генератор правил обновляется в зависимости от установленных модов и некоторых настроек SMF.';
@@ -99,21 +102,18 @@ $txt['optimus_manage']      = 'Настройка robots.txt';
 $txt['optimus_root_path']   = 'Путь к корневой директории сайта';
 $txt['optimus_rules']       = 'Генератор правил';
 $txt['optimus_rules_hint']  = 'Можете воспользоваться этими заготовками для создания своих правил (в области справа):';
-$txt['optimus_useful']      = '<a href="https://dragomano.ru/articles/pravilnyj-robotstxt-dlja-smf" target="_blank" rel="noopener" class="bbc_link">Правильный robots.txt для SMF</a>';
 $txt['optimus_links_title'] = 'Полезные ссылки';
 $txt['optimus_links']       = array(
-	'Проверка robots.txt'                       => 'https://webmaster.yandex.ru/robots.xml',
-	'Как настроить редирект'                    => 'https://goo.gl/LVPRpr',
-	'Комплексный SEO-аудит всего сайта'         => 'https://goo.gl/TBw79p',
-	'Авторегистрация форума в каталогах Рунета' => 'https://goo.gl/uAR3CZ',
-	'Автоматическое продвижение вашего сайта'   => 'https://goo.gl/RMSDnx'
+	'Правильный robots.txt для SMF' => 'https://dragomano.ru/articles/pravilnyj-robotstxt-dlja-smf',
+	'Проверка robots.txt'           => 'https://webmaster.yandex.ru/robots.xml',
+	'Как настроить редирект'        => 'https://goo.gl/LVPRpr'
 );
 
 $txt['optimus_sitemap_title'] = 'Карта форума';
-$txt['optimus_sitemap_desc']  = 'Optimus умеет создавать xml-карту для форумов любого размера.';
+$txt['optimus_sitemap_desc']  = 'Optimus умеет создавать XML-карту для форумов любого размера. Она хранится в кэше и обновляется раз в сутки.';
 
 $txt['optimus_sitemap_enable']                  = 'Активировать карту форума';
-$txt['optimus_sitemap_link']                    = 'Показывать ссылку на карту форума в подвале';
+$txt['optimus_sitemap_link']                    = 'Показывать ссылку на карту в подвале';
 $txt['optimus_main_page_frequency']             = 'Частота изменения главной страницы';
 $txt['optimus_main_page_frequency_set']         = array('Постоянная (always)', 'В зависимости от даты последнего сообщения');
 $txt['optimus_sitemap_boards']                  = 'Добавлять в карту ссылки на разделы форума';

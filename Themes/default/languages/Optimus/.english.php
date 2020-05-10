@@ -77,19 +77,23 @@ $txt['optimus_meta_name']      = 'Name';
 $txt['optimus_meta_content']   = 'Content';
 $txt['optimus_meta_info']      = 'Please use only the values from <strong>content</strong> parameter of the meta tags.<br>Example: <span class="smalltext">&lt;meta name="<strong>NAME</strong>" content="<strong>VALUE</strong>"&gt;</span>';
 $txt['optimus_search_engines'] = array(
-	'Google' => array('google-site-verification','<a href="https://www.google.com/webmasters/tools/" target="_blank" rel="noopener">Google Search Console</a>'),
-	'Yandex' => array('yandex-verification', '<a href="https://webmaster.yandex.com/" target="_blank" rel="noopener">Yandex.Webmaster</a>'),
-	'Bing'   => array('msvalidate.01', '<a href="https://www.bing.com/toolbox/webmaster/" target="_blank" rel="noopener">Bing Webmaster</a>')
+	'Google' => array('google-site-verification','https://www.google.com/webmasters/tools/', 'Google Search Console'),
+	'Bing'   => array('msvalidate.01', 'https://www.bing.com/toolbox/webmaster/', 'Bing Webmaster'),
+	'Yandex' => array('yandex-verification', 'https://webmaster.yandex.com/', 'Yandex.Webmaster')
 );
+
 
 $txt['optimus_counters']      = 'Counters';
 $txt['optimus_counters_desc'] = 'You can add and change any counters in this section to log visits of your forum.';
 
-$txt['optimus_head_code']       = 'Invisible counters loading on <strong>head</strong> section (<a href="https://www.google.com/analytics/sign_up.html" target="_blank" rel="noopener" class="bbc_link">Google Analytics</a>)';
-$txt['optimus_stat_code']       = 'Other invisible counters (<a href="https://matomo.org/" target="_blank" rel="noopener" class="bbc_link">Matomo</a> etc)';
-$txt['optimus_count_code']      = 'Visible counters (<a href="http://www.prtracker.com/FreeCounter.html" target="_blank" rel="noopener" class="bbc_link">PRTracker</a> etc)';
-$txt['optimus_counters_css']    = 'Appearance for visible counters (CSS)';
-$txt['optimus_ignored_actions'] = 'Ignored actions';
+$txt['optimus_head_code']               = 'Invisible counters with loading in the <strong>head</strong> section';
+$txt['optimus_head_code_subtext']       = 'For example, <a href="https://www.google.com/analytics/sign_up.html" target="_blank" rel="noopener" class="bbc_link">Google Analytics</a>';
+$txt['optimus_stat_code']               = 'Invisible counters with loading in the <strong>body</strong section';
+$txt['optimus_stat_code_subtext']       = 'For example, <a href="https://matomo.org/" target="_blank" rel="noopener" class="bbc_link">Matomo</a> etc';
+$txt['optimus_count_code']              = 'Visible counters';
+$txt['optimus_counters_css']            = 'Appearance for visible counters (CSS)';
+$txt['optimus_ignored_actions']         = 'Ignored actions';
+$txt['optimus_ignored_actions_subtext'] = 'Counters will not be loaded on these areas!';
 
 $txt['optimus_robots_title'] = 'Customizing a robots.txt';
 $txt['optimus_robots_desc']  = 'The rule generator is updated depending on the installed mods and some settings of your SMF.';
@@ -98,19 +102,15 @@ $txt['optimus_manage']      = 'Manage robots.txt';
 $txt['optimus_root_path']   = 'Path to the site root directory';
 $txt['optimus_rules']       = 'Rule generator';
 $txt['optimus_rules_hint']  = 'You can use these rules as an example for your robots.txt (on the right textarea):';
-$txt['optimus_useful']      = '';
 $txt['optimus_links_title'] = 'Useful links';
 $txt['optimus_links']       = array(
 	'Create a robots.txt file'              => 'https://support.google.com/webmasters/answer/6062596?hl=en',
-	'Using robots.txt'                      => 'https://help.yandex.com/webmaster/?id=1113851',
+	'Using robots.txt'                      => 'https://yandex.com/support/webmaster/controlling-robot/robots-txt.html?lang=en',
 	'Technical audit of the entire website' => 'https://goo.gl/itx8Fp'
 );
 
-
-
-
 $txt['optimus_sitemap_title'] = 'Sitemap';
-$txt['optimus_sitemap_desc']  = 'Do you want a simple sitemap? Optimus can generate a XML-map for forums of any size. Just enable this option below.';
+$txt['optimus_sitemap_desc']  = 'Optimus can generate a XML-map for forums of any size. It is stored in the cache and updated once a day.';
 
 $txt['optimus_sitemap_enable']                  = 'Activate the Sitemap area';
 $txt['optimus_sitemap_link']                    = 'Show the Sitemap link on the footer';

@@ -39,13 +39,14 @@ function template_favicon()
 						</span>
 					</dt>
 					<dd>
-						<textarea rows="5" name="optimus_favicon_text" id="optimus_favicon_text">', !empty($modSettings['optimus_favicon_text']) ? $modSettings['optimus_favicon_text'] : '', '</textarea>
+						<textarea rows="5" name="optimus_favicon_text" id="optimus_favicon_text">
+							', !empty($modSettings['optimus_favicon_text']) ? $modSettings['optimus_favicon_text'] : '', '
+						</textarea>
 					</dd>
 				</dl>
-				<hr class="clear">
 				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
 				<input type="hidden" name="', $context['admin-dbsc_token_var'], '" value="', $context['admin-dbsc_token'], '">
-				<div class="righttext"><input type="submit" class="button" value="', $txt['save'], '"></div>
+				<input type="submit" class="button" value="', $txt['save'], '">
 			</form>
 		</div>
 	</div>';
@@ -90,12 +91,14 @@ function template_metatags()
 		<p class="information centertext">', $txt['optimus_meta_info'], '</p>
 		<div class="windowbg">
 			<div class="content centertext">
-				<table class="table_grid">
-					<tr class="title_bar">
-						<th>', $txt['optimus_meta_tools'], '</th>
-						<th>', $txt['optimus_meta_name'], '</th>
-						<th>', $txt['optimus_meta_content'], '</th>
-					</tr>';
+				<table class="table_grid metatags">
+					<thead>
+						<tr class="title_bar">
+							<th>', $txt['optimus_meta_tools'], '</th>
+							<th>', $txt['optimus_meta_name'], '</th>
+							<th>', $txt['optimus_meta_content'], '</th>
+						</tr>
+					</thead>';
 
 	$metatags = !empty($modSettings['optimus_meta']) ? unserialize($modSettings['optimus_meta']) : '';
 	$engines  = array();
@@ -104,35 +107,37 @@ function template_metatags()
 		$engines[] = $data[0];
 
 		echo '
-					<tr class="windowbg">
-						<td>', $engine, ' (<strong>', $data[1], '</strong>)</td>
-						<td>
-							<input type="text" name="custom_tag_name[]" size="24" value="', $data[0], '">
-						</td>
-						<td>
-							<input type="text" name="custom_tag_value[]" size="40" value="', isset($metatags[$data[0]]) ? $metatags[$data[0]] : '', '">
-						</td>
-					</tr>';
+					<tbody>
+						<tr class="windowbg">
+							<td>', $engine, ' (<strong><a class="bbc_link" href="', $data[1], '" target="_blank" rel="noopener">', $data[2], '</a></strong>)</td>
+							<td>
+								<input type="text" name="custom_tag_name[]" size="24" value="', $data[0], '">
+							</td>
+							<td>
+								<input type="text" name="custom_tag_value[]" size="40" value="', $metatags[$data[0]] ?? '', '">
+							</td>
+						</tr>';
 	}
 
 	if (!empty($metatags)) {
 		foreach ($metatags as $name => $value) {
 			if (!in_array($name, $engines)) {
 				echo '
-					<tr class="windowbg">
-						<td>', $txt['optimus_meta_customtag'], '</td>
-						<td>
-							<input type="text" name="custom_tag_name[]" size="24" value="', $name, '">
-						</td>
-						<td>
-							<input type="text" name="custom_tag_value[]" size="40" value="', $value, '">
-						</td>
-					</tr>';
+						<tr class="windowbg">
+							<td>', $txt['optimus_meta_customtag'], '</td>
+							<td>
+								<input type="text" name="custom_tag_name[]" size="24" value="', $name, '">
+							</td>
+							<td>
+								<input type="text" name="custom_tag_value[]" size="40" value="', $value, '">
+							</td>
+						</tr>';
 			}
 		}
 	}
 
 	echo '
+					</tbody>
 				</table>
 				<noscript>
 					<div style="margin-top: 1ex;"><input type="text" name="custom_tag_name[]" size="24" class="input_text"> => <input type="text" name="custom_tag_value[]" size="40" class="input_text"></div>
@@ -147,45 +152,9 @@ function template_metatags()
 						setOuterHTML(document.getElementById("moreTags"), \'<div style="margin-top: 1ex;"><input type="text" name="custom_tag_name[]" size="24" class="input_text"> => <input type="text" name="custom_tag_value[]" size="40" class="input_text"><\' + \'/div><div id="moreTags"><\' + \'/div>\');
 					}
 				</script>
-				<hr class="clear">
 				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
 				<input type="hidden" name="', $context['admin-dbsc_token_var'], '" value="', $context['admin-dbsc_token'], '">
-				<div class="righttext"><input type="submit" class="button" value="', $txt['save'], '"></div>
-			</div>
-		</div>
-	</form>
-	<br class="clear">';
-}
-
-function template_counters()
-{
-	global $context, $txt, $modSettings;
-
-	echo '
-	<form action="', $context['post_url'], '" method="post" accept-charset="', $context['character_set'], '">
-		<div class="cat_bar">
-			<h3 class="catbg">', $txt['optimus_counters'], '</h3>
-		</div>
-		<div class="windowbg noup">
-			<div class="content">
-				<label for="optimus_head_code">', $txt['optimus_head_code'], '</label><br>
-				<textarea id="optimus_head_code" name="optimus_head_code" cols="60" rows="4" style="width: 99%">', !empty($modSettings['optimus_head_code']) ? $modSettings['optimus_head_code'] : '', '</textarea>
-				<br><br>
-				<label for="optimus_stat_code">', $txt['optimus_stat_code'], '</label><br>
-				<textarea id="optimus_stat_code" name="optimus_stat_code" cols="60" rows="4" style="width: 99%">', !empty($modSettings['optimus_stat_code']) ? $modSettings['optimus_stat_code'] : '', '</textarea>
-				<br><br>
-				<label for="optimus_count_code">', $txt['optimus_count_code'], '</label><br>
-				<textarea id="optimus_count_code" name="optimus_count_code" cols="60" rows="4" style="width: 99%">', !empty($modSettings['optimus_count_code']) ? $modSettings['optimus_count_code'] : '', '</textarea>
-				<br><br>
-				<label for="optimus_counters_css">', $txt['optimus_counters_css'], '</label><br>
-				<textarea id="optimus_counters_css" name="optimus_counters_css" cols="60" rows="4" style="width: 99%">', !empty($modSettings['optimus_counters_css']) ? $modSettings['optimus_counters_css'] : '', '</textarea>
-				<br><br>
-				<label for="optimus_ignored_actions">', $txt['optimus_ignored_actions'], '</label><br>
-				<input type="text" class="input_text" value="', !empty($modSettings['optimus_ignored_actions']) ? $modSettings['optimus_ignored_actions'] : '', '" id="optimus_ignored_actions" name="optimus_ignored_actions" style="width: 99%">
-				<hr class="clear">
-				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
-				<input type="hidden" name="', $context['admin-dbsc_token_var'], '" value="', $context['admin-dbsc_token'], '">
-				<div class="righttext"><input type="submit" class="button" value="', $txt['save'], '"></div>
+				<input type="submit" class="button" value="', $txt['save'], '">
 			</div>
 		</div>
 	</form>
@@ -220,18 +189,6 @@ function template_robots()
 						<h4>', $txt['optimus_rules'], '</h4>
 						<span class="smalltext">', $txt['optimus_rules_hint'], '</span>
 						', $context['new_robots_content'], '
-						<span class="smalltext">', $txt['optimus_useful'], '</span>
-					</div>
-				</div>
-				<div class="half_content">
-					<div class="content">
-						<h4><a href="/robots.txt">robots.txt</a></h4>
-						<textarea rows="22" name="robots">', $context['robots_content'], '</textarea>
-					</div>
-				</div>
-				<hr class="clear">
-				<div class="half_content">
-					<div class="floatleft">
 						<h4>', $txt['optimus_links_title'], '</h4>
 						<ul class="smalltext">';
 
@@ -243,13 +200,17 @@ function template_robots()
 	echo '
 						</ul>
 					</div>
-				</div>';
-
-	echo '
-				<hr class="clear">
+				</div>
+				<div class="half_content">
+					<div class="content">
+						<h4><a href="/robots.txt">robots.txt</a></h4>
+						<textarea rows="22" name="robots">', $context['robots_content'], '</textarea>
+					</div>
+				</div>
+				<br><br>
 				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
 				<input type="hidden" name="', $context['admin-dbsc_token_var'], '" value="', $context['admin-dbsc_token'], '">
-				<div class="righttext"><input type="submit" class="button" value="', $txt['save'], '"></div>
+				<input type="submit" class="button" value="', $txt['save'], '">
 			</div>
 		</div>
 	</form>
@@ -372,7 +333,7 @@ function template_search_terms_above()
 	</div>';
 	} else {
 		echo '
-	<p class="information">', $txt['optimus_no_search_terms'], '</p>';
+	<div class="information">', $txt['optimus_no_search_terms'], '</div>';
 	}
 }
 

@@ -442,9 +442,9 @@ class Subs
 				$context['posting_fields']['optimus_description']['input'] = array(
 					'type' => 'textarea',
 					'attributes' => array(
-						'id' => 'optimus_description',
+						'id'        => 'optimus_description',
 						'maxlength' => 255,
-						'value' => $context['optimus']['description']
+						'value'     => $context['optimus']['description']
 					)
 				);
 			}
@@ -478,8 +478,8 @@ class Subs
 				'input' => array(
 					'type' => 'select',
 					'attributes' => array(
-						'id' => 'optimus_keywords',
-						'name' => 'optimus_keywords[]',
+						'id'       => 'optimus_keywords',
+						'name'     => 'optimus_keywords[]',
 						'multiple' => true
 					),
 					'options' => array()
@@ -490,12 +490,12 @@ class Subs
 				foreach ($context['optimus']['keywords'] as $key) {
 					if (!defined('JQUERY_VERSION')) {
 						$context['posting_fields']['optimus_keywords']['input']['options'][$key]['attributes'] = array(
-							'value' => $key,
+							'value'    => $key,
 							'selected' => true
 						);
 					} else {
 						$context['posting_fields']['optimus_keywords']['input']['options'][$key] = array(
-							'value' => $key,
+							'value'    => $key,
 							'selected' => true
 						);
 					}
@@ -558,7 +558,7 @@ class Subs
 			SET optimus_description = {string:description}
 			WHERE id_topic = {int:current_topic}',
 			array(
-				'description'   => $description,
+				'description'   => shorten_subject($description, 252),
 				'current_topic' => $topic
 			)
 		);

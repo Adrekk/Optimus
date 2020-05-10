@@ -12,7 +12,6 @@ if ((SMF == 'SSI') && !$user_info['is_admin'])
 	die('Admin privileges required.');
 
 db_extend('packages');
-db_extend('extra');
 
 $tables[] = array(
 	'name'    => 'optimus_keywords',
