@@ -17,38 +17,36 @@ function template_favicon()
 
 	echo '
 	<div class="windowbg noup">
-		<div class="content">
-			<form action="', $context['post_url'], '" method="post" accept-charset="', $context['character_set'], '">
-				<dl class="settings">
-					<dt>
-						<span><label for="optimus_favicon_api_key">', $txt['optimus_favicon_api_key'], '</label></span>
-					</dt>
-					<dd>
-						<input name="optimus_favicon_api_key" id="optimus_favicon_api_key" value="', !empty($modSettings['optimus_favicon_api_key']) ? $modSettings['optimus_favicon_api_key'] : '', '" class="input_text" type="text" size="80">';
+		<form action="', $context['post_url'], '" method="post" accept-charset="', $context['character_set'], '">
+			<dl class="settings">
+				<dt>
+					<span><label for="optimus_favicon_api_key">', $txt['optimus_favicon_api_key'], '</label></span>
+				</dt>
+				<dd>
+					<input name="optimus_favicon_api_key" id="optimus_favicon_api_key" value="', !empty($modSettings['optimus_favicon_api_key']) ? $modSettings['optimus_favicon_api_key'] : '', '" class="input_text" type="text" size="80">';
 
 	if (!empty($modSettings['optimus_favicon_api_key']))
 		echo '
-						<button type="submit" form="favicon_form" id="form_button" class="button" style="float:none">', $txt['optimus_favicon_create'], '</button>';
+					<button type="submit" form="favicon_form" id="form_button" class="button" style="float:none">', $txt['optimus_favicon_create'], '</button>';
 
 	echo '
-					</dd>
-					<dt>
-						<span>
-							<label for="optimus_favicon_text">', $txt['optimus_favicon_text'], '</label><br>
-							<span class="smalltext">', $txt['optimus_favicon_help'], '</span>
-						</span>
-					</dt>
-					<dd>
-						<textarea rows="5" name="optimus_favicon_text" id="optimus_favicon_text">
-							', !empty($modSettings['optimus_favicon_text']) ? $modSettings['optimus_favicon_text'] : '', '
-						</textarea>
-					</dd>
-				</dl>
-				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
-				<input type="hidden" name="', $context['admin-dbsc_token_var'], '" value="', $context['admin-dbsc_token'], '">
-				<input type="submit" class="button" value="', $txt['save'], '">
-			</form>
-		</div>
+				</dd>
+				<dt>
+					<span>
+						<label for="optimus_favicon_text">', $txt['optimus_favicon_text'], '</label><br>
+						<span class="smalltext">', $txt['optimus_favicon_help'], '</span>
+					</span>
+				</dt>
+				<dd>
+					<textarea rows="5" name="optimus_favicon_text" id="optimus_favicon_text">
+						', !empty($modSettings['optimus_favicon_text']) ? $modSettings['optimus_favicon_text'] : '', '
+					</textarea>
+				</dd>
+			</dl>
+			<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
+			<input type="hidden" name="', $context['admin-dbsc_token_var'], '" value="', $context['admin-dbsc_token'], '">
+			<input type="submit" class="button" value="', $txt['save'], '">
+		</form>
 	</div>';
 
 	// https://realfavicongenerator.net/api/interactive_api
@@ -74,9 +72,6 @@ function template_favicon()
 			});
 		});
 	</script>';
-
-	echo '
-	<br class="clear">';
 }
 
 function template_metatags()
@@ -88,17 +83,16 @@ function template_metatags()
 		<div class="cat_bar">
 			<h3 class="catbg">', $txt['optimus_meta_title'], '</h3>
 		</div>
-		<p class="information centertext">', $txt['optimus_meta_info'], '</p>
-		<div class="windowbg">
-			<div class="content centertext">
-				<table class="table_grid metatags">
-					<thead>
-						<tr class="title_bar">
-							<th>', $txt['optimus_meta_tools'], '</th>
-							<th>', $txt['optimus_meta_name'], '</th>
-							<th>', $txt['optimus_meta_content'], '</th>
-						</tr>
-					</thead>';
+		<div class="information centertext">', $txt['optimus_meta_info'], '</div>
+		<table class="table_grid metatags centertext">
+			<thead>
+				<tr class="title_bar">
+					<th>', $txt['optimus_meta_tools'], '</th>
+					<th>', $txt['optimus_meta_name'], '</th>
+					<th>', $txt['optimus_meta_content'], '</th>
+				</tr>
+			</thead>
+			<tbody>';
 
 	$metatags = !empty($modSettings['optimus_meta']) ? unserialize($modSettings['optimus_meta']) : '';
 	$engines  = array();
@@ -107,58 +101,58 @@ function template_metatags()
 		$engines[] = $data[0];
 
 		echo '
-					<tbody>
-						<tr class="windowbg">
-							<td>', $engine, ' (<strong><a class="bbc_link" href="', $data[1], '" target="_blank" rel="noopener">', $data[2], '</a></strong>)</td>
-							<td>
-								<input type="text" name="custom_tag_name[]" size="24" value="', $data[0], '">
-							</td>
-							<td>
-								<input type="text" name="custom_tag_value[]" size="40" value="', $metatags[$data[0]] ?? '', '">
-							</td>
-						</tr>';
+				<tr class="windowbg">
+					<td>', $engine, ' (<strong><a class="bbc_link" href="', $data[1], '" target="_blank" rel="noopener">', $data[2], '</a></strong>)</td>
+					<td>
+						<input type="text" name="custom_tag_name[]" size="24" value="', $data[0], '">
+					</td>
+					<td>
+						<input type="text" name="custom_tag_value[]" size="40" value="', $metatags[$data[0]] ?? '', '">
+					</td>
+				</tr>';
 	}
 
 	if (!empty($metatags)) {
 		foreach ($metatags as $name => $value) {
 			if (!in_array($name, $engines)) {
 				echo '
-						<tr class="windowbg">
-							<td>', $txt['optimus_meta_customtag'], '</td>
-							<td>
-								<input type="text" name="custom_tag_name[]" size="24" value="', $name, '">
-							</td>
-							<td>
-								<input type="text" name="custom_tag_value[]" size="40" value="', $value, '">
-							</td>
-						</tr>';
+				<tr class="windowbg">
+					<td>', $txt['optimus_meta_customtag'], '</td>
+					<td>
+						<input type="text" name="custom_tag_name[]" size="24" value="', $name, '">
+					</td>
+					<td>
+						<input type="text" name="custom_tag_value[]" size="40" value="', $value, '">
+					</td>
+				</tr>';
 			}
 		}
 	}
 
 	echo '
-					</tbody>
-				</table>
-				<noscript>
-					<div style="margin-top: 1ex;"><input type="text" name="custom_tag_name[]" size="24" class="input_text"> => <input type="text" name="custom_tag_value[]" size="40" class="input_text"></div>
-				</noscript>
-				<div id="moreTags"></div>
-				<div style="margin-top: 1ex; display: none;" id="newtag_link">
-					<a href="#" onclick="addNewTag(); return false;" class="bbc_link">', $txt['optimus_meta_addtag'], '</a>
+			</tbody>
+		</table>
+		<div class="windowbg centertext">
+			<noscript>
+				<div style="margin-top: 1ex">
+					<input type="text" name="custom_tag_name[]" size="24" class="input_text"> => <input type="text" name="custom_tag_value[]" size="40" class="input_text">
 				</div>
-				<script>
-					document.getElementById("newtag_link").style.display = "";
-					function addNewTag() {
-						setOuterHTML(document.getElementById("moreTags"), \'<div style="margin-top: 1ex;"><input type="text" name="custom_tag_name[]" size="24" class="input_text"> => <input type="text" name="custom_tag_value[]" size="40" class="input_text"><\' + \'/div><div id="moreTags"><\' + \'/div>\');
-					}
-				</script>
-				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
-				<input type="hidden" name="', $context['admin-dbsc_token_var'], '" value="', $context['admin-dbsc_token'], '">
-				<input type="submit" class="button" value="', $txt['save'], '">
+			</noscript>
+			<div id="moreTags"></div>
+			<div style="margin-top: 1ex; display: none" id="newtag_link">
+				<a href="#" onclick="addNewTag(); return false;" class="bbc_link">', $txt['optimus_meta_addtag'], '</a>
 			</div>
+			<script>
+				document.getElementById("newtag_link").style.display = "";
+				function addNewTag() {
+					setOuterHTML(document.getElementById("moreTags"), \'<div style="margin-top: 1ex"><input type="text" name="custom_tag_name[]" size="24" class="input_text"> => <input type="text" name="custom_tag_value[]" size="40" class="input_text"><\' + \'/div><div id="moreTags"><\' + \'/div>\');
+				}
+			</script>
+			<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
+			<input type="hidden" name="', $context['admin-dbsc_token_var'], '" value="', $context['admin-dbsc_token'], '">
+			<input type="submit" class="button" value="', $txt['save'], '">
 		</div>
-	</form>
-	<br class="clear">';
+	</form>';
 }
 
 function template_robots()
@@ -170,27 +164,30 @@ function template_robots()
 		<div class="cat_bar">
 			<h3 class="catbg">', $txt['optimus_manage'], '</h3>
 		</div>
-		<div class="windowbg noup">
-			<div class="content">
-				<dl class="settings">
-					<dt>
-						<span><label for="optimus_root_path">', $txt['optimus_root_path'], '</label></span>
-					</dt>
-					<dd>
-						<input name="optimus_root_path" id="optimus_root_path" value="', $modSettings['optimus_root_path'] ?? '', '" class="input_text" type="text" size="80">
-					</dd>
-				</dl>
-			</div>
+		<div class="information">
+			<dl class="settings">
+				<dt>
+					<span><label for="optimus_root_path">', $txt['optimus_root_path'], '</label></span>
+				</dt>
+				<dd>
+					<input name="optimus_root_path" id="optimus_root_path" value="', $modSettings['optimus_root_path'] ?? '', '" class="input_text" type="text" size="80">
+				</dd>
+			</dl>
 		</div>
-		<div class="windowbg">
-			<div class="content">
+		<div class="roundframe">
 				<div class="half_content">
-					<div class="content">
-						<h4>', $txt['optimus_rules'], '</h4>
+					<div class="title_bar">
+						<h4 class="titlebg">', $txt['optimus_rules'], '</h4>
+					</div>
+					<div class="inner">
 						<span class="smalltext">', $txt['optimus_rules_hint'], '</span>
 						', $context['new_robots_content'], '
-						<h4>', $txt['optimus_links_title'], '</h4>
-						<ul class="smalltext">';
+					</div>
+					<div class="title_bar">
+						<h4 class="titlebg">', $txt['optimus_links_title'], '</h4>
+					</div>
+					<div class="inner">
+						<ul class="bbc_list">';
 
 	foreach ($txt['optimus_links'] as $ankor => $url) {
 		echo '
@@ -202,8 +199,10 @@ function template_robots()
 					</div>
 				</div>
 				<div class="half_content">
-					<div class="content">
-						<h4><a href="/robots.txt">robots.txt</a></h4>
+					<div class="title_bar">
+						<h4 class="titlebg"><a href="/robots.txt">robots.txt</a></h4>
+					</div>
+					<div class="inner">
 						<textarea rows="22" name="robots">', $context['robots_content'], '</textarea>
 					</div>
 				</div>
@@ -211,10 +210,8 @@ function template_robots()
 				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
 				<input type="hidden" name="', $context['admin-dbsc_token_var'], '" value="', $context['admin-dbsc_token'], '">
 				<input type="submit" class="button" value="', $txt['save'], '">
-			</div>
 		</div>
-	</form>
-	<br class="clear">';
+	</form>';
 }
 
 function template_footer_counters_above()
@@ -280,8 +277,7 @@ function template_search_terms_above()
 
 	if (!empty($context['search_terms'])) {
 		echo '
-	<div class="windowbg noup">
-		<div class="content">';
+	<div class="windowbg noup">';
 
 		$i = 0;
 		$rows = '';
@@ -294,42 +290,41 @@ function template_search_terms_above()
 
 		if (!empty($rows)) {
 			echo '
-			<script src="https://www.gstatic.com/charts/loader.js"></script>
-			<script>
-				google.charts.load(\'current\', {\'packages\':[\'corechart\']});
-				google.charts.setOnLoadCallback(drawChart);
-				function drawChart() {
-					let data = new google.visualization.DataTable();
-					data.addColumn("string", "Query");
-					data.addColumn("number", "Hits");
-					data.addRows([', $rows, ']);
-					let options = {"title":"' . sprintf($txt['optimus_chart_title'], $i) . '", "backgroundColor":"transparent", "width":"800"};
-					let chart = new google.visualization.PieChart(document.getElementById("chart_div"));
-					chart.draw(data, options);
-				}
-			</script>
-			<div id="chart_div" class="centertext"></div>';
+		<script src="https://www.gstatic.com/charts/loader.js"></script>
+		<script>
+			google.charts.load(\'current\', {\'packages\':[\'corechart\']});
+			google.charts.setOnLoadCallback(drawChart);
+			function drawChart() {
+				let data = new google.visualization.DataTable();
+				data.addColumn("string", "Query");
+				data.addColumn("number", "Hits");
+				data.addRows([', $rows, ']);
+				let options = {"title":"' . sprintf($txt['optimus_chart_title'], $i) . '", "backgroundColor":"transparent", "width":"800"};
+				let chart = new google.visualization.PieChart(document.getElementById("chart_div"));
+				chart.draw(data, options);
+			}
+		</script>
+		<div id="chart_div" class="centertext"></div>';
 		}
 
 		echo '
-			<dl class="stats">';
+		<dl class="stats">';
 
 		foreach ($context['search_terms'] as $id => $data) {
 			if (!empty($data['text'])) {
 				echo '
-				<dt>
-					<a href="', $scripturl, '?action=search2;search=', urlencode($data['text']), '">', $data['text'], '</a>
-				</dt>
-				<dd class="statsbar generic_bar righttext">
-					<div class="bar" style="width: ', $data['scale'], '%"></div>
-					<span>', $data['hit'], '</span>
-				</dd>';
+			<dt>
+				<a href="', $scripturl, '?action=search2;search=', urlencode($data['text']), '">', $data['text'], '</a>
+			</dt>
+			<dd class="statsbar generic_bar righttext">
+				<div class="bar" style="width: ', $data['scale'], '%"></div>
+				<span>', $data['hit'], '</span>
+			</dd>';
 			}
 		}
 
 		echo '
-			</dl>
-		</div>
+		</dl>
 	</div>';
 	} else {
 		echo '

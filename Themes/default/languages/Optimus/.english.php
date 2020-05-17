@@ -15,7 +15,7 @@ $txt['optimus_base_desc']  = 'On this page you can change a forum description, m
 
 $txt['optimus_main_page']           = 'Homepage';
 $txt['optimus_forum_index']         = 'Forum Homepage title';
-$txt['optimus_description']         = 'The forum annotation';
+$txt['optimus_description']         = 'The forum description';
 $txt['optimus_description_subtext'] = 'It will be used as content of the meta-tag <strong>description</strong>.';
 
 $txt['optimus_all_pages']                           = 'Topic & board pages';
