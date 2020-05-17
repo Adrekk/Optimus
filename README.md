@@ -15,18 +15,18 @@ This mod might help you solve some problems related with indexing of your forum 
 
 ### Features:
 * Managing of title and description for the main forum page.
-* Managing of title, description and keywords metatags for topic pages.
+* Managing of title, description, and keywords metatags for topic pages.
 * Description meta-tag for boards' and topics' pages.
 * Keywords meta-tag for topics. Users can fill them when creating/changing topics.
 * Support of Open Graph meta-tags and Twitter Cards.
-* Ability to specify the verification codes when adding sites to Google, Yandex and Bing (Webmaster Tools).
-* Adding of custom metatags.
-* Adding of any counters without template's editing.
-* Changing the robots.txt from Settings page.
+* Ability to specify the verification codes when adding sites to Google, Yandex, and Bing (Webmaster Tools).
+* Adding custom metatags.
+* Adding any counters without template editing.
+* Changing the robots.txt from the Settings page.
 * Generator for the robots.txt file.
 * Simple Sitemap XML.
 * Generation of favicon.
-* Support of cyrillic domains.
+* Support of Cyrillic domains.
 * Statistics of search queries on the forum.
 
 P.S. The **smf20** branch contains the Optimus 2.x version for SMF 2.0.x
